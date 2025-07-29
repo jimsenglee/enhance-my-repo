@@ -27,8 +27,11 @@ import {
   Edit,
   BarChart3,
   Users,
-  Calendar
+  Calendar,
+  PieChart
 } from 'lucide-react';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell } from 'recharts';
 import { toast } from '@/hooks/use-toast';
 
 interface TutorialInteraction {
@@ -212,6 +215,42 @@ const ContentInteractionAnalytics = () => {
     resolved: 156,
     avgResponseTime: 2.3,
     satisfactionRate: 87.5
+  };
+
+  // Chart data for visualizations
+  const tutorialPopularityData = tutorialInteractions.map(t => ({
+    name: t.title.substring(0, 15) + '...',
+    views: t.views,
+    bookmarks: t.bookmarks,
+    completion: t.completionRate
+  }));
+
+  const feedbackStatusData = [
+    { name: 'New', value: feedbackMetrics.newFeedback, color: '#3B82F6' },
+    { name: 'In Progress', value: feedbackMetrics.inProgress, color: '#F59E0B' },
+    { name: 'Resolved', value: feedbackMetrics.resolved, color: '#10B981' },
+    { name: 'Closed', value: 14, color: '#6B7280' }
+  ];
+
+  const feedbackTypeData = [
+    { type: 'Bug Reports', count: 89, color: '#EF4444' },
+    { type: 'Feature Requests', count: 76, color: '#3B82F6' },
+    { type: 'General Feedback', count: 73, color: '#10B981' }
+  ];
+
+  const chartConfig = {
+    views: {
+      label: 'Views',
+      color: 'hsl(var(--primary))',
+    },
+    bookmarks: {
+      label: 'Bookmarks', 
+      color: 'hsl(var(--secondary))',
+    },
+    completion: {
+      label: 'Completion Rate',
+      color: 'hsl(var(--accent))',
+    },
   };
 
   const handleFeedbackUpdate = async (feedbackId: string, updates: Partial<FeedbackItem>) => {
@@ -473,16 +512,50 @@ const ContentInteractionAnalytics = () => {
             </Card>
           </div>
 
-          {/* Popular Tutorials */}
+          {/* Tutorial Popularity Chart */}
           <Card className="border-primary/20">
             <CardHeader>
               <CardTitle className="text-primary flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Most Popular Tutorials
+                <BarChart3 className="h-5 w-5" />
+                Tutorial Popularity
               </CardTitle>
-              <CardDescription>Ranked by views and engagement metrics</CardDescription>
+              <CardDescription>Views vs Bookmarks comparison for top tutorials</CardDescription>
             </CardHeader>
             <CardContent>
+              <ChartContainer config={chartConfig} className="h-[350px] mb-6">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={tutorialPopularityData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3} />
+                    <XAxis 
+                      dataKey="name" 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar 
+                      dataKey="views" 
+                      fill="hsl(var(--primary))" 
+                      radius={[4, 4, 0, 0]}
+                      name="Views"
+                    />
+                    <Bar 
+                      dataKey="bookmarks" 
+                      fill="hsl(var(--secondary))" 
+                      radius={[4, 4, 0, 0]}
+                      name="Bookmarks"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+
+              {/* Popular Tutorials Table */}
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -610,6 +683,99 @@ const ContentInteractionAnalytics = () => {
               <CardContent className="p-6 text-center">
                 <div className="text-2xl font-bold text-green-600">{feedbackMetrics.satisfactionRate}%</div>
                 <div className="text-sm text-gray-600">Satisfaction</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Feedback Status Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Feedback Status Pie Chart */}
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-primary flex items-center gap-2">
+                  <PieChart className="h-5 w-5" />
+                  Feedback by Status
+                </CardTitle>
+                <CardDescription>Distribution of feedback items by current status</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RechartsPieChart>
+                      <Pie
+                        data={feedbackStatusData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                      >
+                        {feedbackStatusData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <ChartTooltip 
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            const data = payload[0].payload;
+                            return (
+                              <div className="bg-white p-3 border rounded-lg shadow-lg">
+                                <p className="font-medium">{data.name}</p>
+                                <p className="text-sm text-gray-600">{data.value} items</p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                    </RechartsPieChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Feedback Type Bar Chart */}
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-primary flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  Feedback by Type
+                </CardTitle>
+                <CardDescription>Breakdown of feedback categories</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={feedbackTypeData} layout="horizontal">
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3} />
+                      <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                      <YAxis 
+                        dataKey="type" 
+                        type="category" 
+                        stroke="hsl(var(--muted-foreground))" 
+                        fontSize={12}
+                        width={120}
+                      />
+                      <ChartTooltip 
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            const data = payload[0].payload;
+                            return (
+                              <div className="bg-white p-3 border rounded-lg shadow-lg">
+                                <p className="font-medium">{data.type}</p>
+                                <p className="text-sm text-gray-600">{data.count} items</p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Bar dataKey="count" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
           </div>
