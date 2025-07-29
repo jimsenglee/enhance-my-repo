@@ -17,11 +17,13 @@ import {
   Trophy,
   Zap,
   BookOpen,
-  Eye
+  Eye,
+  Flame
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import AnimatedBreadcrumb from '@/components/ui/animated-breadcrumb';
+import { useNavigate } from 'react-router-dom';
 
 interface QuizResult {
   id: number;
@@ -44,12 +46,12 @@ interface Achievement {
 }
 
 const ProgressTracking = () => {
-  const [selectedTimeRange, setSelectedTimeRange] = useState('7days');
+  const navigate = useNavigate();
 
   const breadcrumbItems = [
     { title: 'Dashboard', href: '/dashboard' },
     { title: 'Education', href: '/education' },
-    { title: 'Progress Tracking' }
+    { title: 'My Progress' }
   ];
 
   // Mock quiz results data
@@ -162,10 +164,11 @@ const ProgressTracking = () => {
   ];
 
   const categoryData = [
-    { category: 'Fundamentals', completed: 12, total: 15, percentage: 80 },
-    { category: 'Conversations', completed: 8, total: 12, percentage: 67 },
-    { category: 'Numbers', completed: 6, total: 8, percentage: 75 },
-    { category: 'Advanced', completed: 3, total: 10, percentage: 30 }
+    { category: 'Vowels', completed: 12, total: 15, percentage: 92, avgScore: 92 },
+    { category: 'Consonants', completed: 8, total: 12, percentage: 67, avgScore: 87 },
+    { category: 'Common Phrases', completed: 6, total: 8, percentage: 75, avgScore: 78 },
+    { category: 'Numbers', completed: 3, total: 10, percentage: 30, avgScore: 95 },
+    { category: 'Advanced', completed: 2, total: 8, percentage: 25, avgScore: 67 }
   ];
 
   const skillDistribution = [
@@ -218,9 +221,9 @@ const ProgressTracking = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-4xl font-bold text-primary">Progress & Performance</h1>
+        <h1 className="text-4xl font-bold text-primary">My Progress</h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Track your lip-reading journey with detailed analytics and achievement milestones
+          Track your lip-reading journey and visualize your improvement over time
         </p>
       </motion.div>
 
@@ -265,11 +268,11 @@ const ProgressTracking = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Time</p>
-                <p className="text-3xl font-bold text-green-600">{totalTimeSpent}m</p>
+                <p className="text-sm font-medium text-gray-600">Current Learning Streak</p>
+                <p className="text-3xl font-bold text-orange-600">7 days</p>
               </div>
-              <div className="p-3 bg-green-100 rounded-full">
-                <Clock className="h-6 w-6 text-green-600" />
+              <div className="p-3 bg-orange-100 rounded-full">
+                <Flame className="h-6 w-6 text-orange-600" />
               </div>
             </div>
           </CardContent>
@@ -307,64 +310,92 @@ const ProgressTracking = () => {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Progress Chart */}
-            <Card className="border-primary/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5 text-primary" />
-                  Score Progress Over Time
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={progressData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis domain={[0, 100]} />
-                    <Tooltip />
-                    <Line 
-                      type="monotone" 
-                      dataKey="score" 
-                      stroke="#7E57C2" 
-                      strokeWidth={3}
-                      dot={{ fill: '#7E57C2', strokeWidth: 2, r: 6 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+          {/* Main Progress Visualization - Individual Quiz Scores Over Time */}
+          <Card className="border-primary/20 lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                My Progress Over Time
+              </CardTitle>
+              <CardDescription>
+                Individual quiz scores plotted against completion date - visualize your improvement journey
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={quizResults.map(result => ({ 
+                  date: new Date(result.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), 
+                  score: result.score,
+                  quizName: result.quizName 
+                }))}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis domain={[0, 100]} />
+                  <Tooltip 
+                    formatter={(value, name, props) => [
+                      `${value}%`, 
+                      `Score (${props.payload.quizName})`
+                    ]}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="score" 
+                    stroke="#7E57C2" 
+                    strokeWidth={3}
+                    dot={{ fill: '#7E57C2', strokeWidth: 2, r: 8 }}
+                    activeDot={{ r: 10, fill: '#7E57C2' }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
 
-            {/* Category Progress */}
-            <Card className="border-primary/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-primary" />
-                  Category Progress
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {categoryData.map((category, index) => (
-                    <motion.div
-                      key={category.category}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium">{category.category}</span>
-                        <span className="text-sm text-gray-600">
-                          {category.completed}/{category.total}
-                        </span>
-                      </div>
-                      <Progress value={category.percentage} className="h-3" />
-                    </motion.div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Interactive Performance by Category Chart */}
+          <Card className="border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5 text-primary" />
+                My Performance by Category
+              </CardTitle>
+              <CardDescription>
+                Click on any category to navigate to relevant learning materials
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart 
+                  data={categoryData} 
+                  layout="horizontal"
+                  onClick={(data) => {
+                    if (data && data.activePayload && data.activePayload[0]) {
+                      const category = data.activePayload[0].payload.category;
+                      // Navigate to tutorial library with category filter
+                      navigate(`/education/tutorials?category=${encodeURIComponent(category)}`);
+                    }
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" domain={[0, 100]} />
+                  <YAxis dataKey="category" type="category" width={100} />
+                  <Tooltip 
+                    formatter={(value) => [`${value}%`, 'Average Score']}
+                    labelFormatter={(label) => `Category: ${label}`}
+                  />
+                  <Bar 
+                    dataKey="avgScore" 
+                    fill="#7E57C2"
+                    cursor="pointer"
+                    onClick={(data) => {
+                      navigate(`/education/tutorials?category=${encodeURIComponent(data.category)}`);
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+              <div className="mt-4 text-sm text-gray-600 text-center">
+                💡 Click on any category bar to practice in that area
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Skills Distribution */}
           <Card className="border-primary/20">
