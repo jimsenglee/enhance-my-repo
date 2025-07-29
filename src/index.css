@@ -1,0 +1,174 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Updated purple-based primary colors */
+    --primary: 262 52% 47%; /* #7E57C2 */
+    --primary-foreground: 0 0% 100%;
+
+    /* Updated purple-based secondary colors */
+    --secondary: 252 32% 75%; /* #B39DDB */
+    --secondary-foreground: 262 76% 29%;
+
+    --muted: 252 100% 97%; /* #EDE7F6 */
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 252 32% 75%; /* #B39DDB */
+    --accent-foreground: 262 76% 29%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 262 52% 47%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 262 52% 47%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 252 32% 75%;
+    --sidebar-accent-foreground: 262 76% 29%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 262 52% 47%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 252 32% 75%;
+    --primary-foreground: 262 76% 29%;
+
+    --secondary: 262 76% 29%;
+    --secondary-foreground: 252 32% 75%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 262 76% 29%;
+    --accent-foreground: 252 32% 75%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 252 32% 75%;
+    
+    --sidebar-background: 262 76% 29%;
+    --sidebar-foreground: 252 32% 75%;
+    --sidebar-primary: 252 32% 75%;
+    --sidebar-primary-foreground: 262 76% 29%;
+    --sidebar-accent: 262 60% 20%;
+    --sidebar-accent-foreground: 252 32% 75%;
+    --sidebar-border: 262 60% 20%;
+    --sidebar-ring: 252 32% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Focus styles for accessibility */
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom animations and transitions */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  /* Glass morphism effects */
+  .backdrop-blur-glass {
+    backdrop-filter: blur(40px);
+  }
+
+  .shadow-glass {
+    box-shadow: 0 8px 32px 0 rgba(126, 87, 194, 0.37);
+  }
+
+  .shadow-glass-lg {
+    box-shadow: 0 16px 64px 0 rgba(126, 87, 194, 0.25);
+  }
+}
