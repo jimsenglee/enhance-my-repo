@@ -18,7 +18,7 @@ const Login = () => {
   const { toast } = useToast();
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +30,9 @@ const Login = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate('/dashboard');
+        // Redirect based on user role
+        const isAdmin = email === 'admin@example.com';
+        navigate(isAdmin ? '/admin' : '/dashboard');
       }
     } catch (error) {
       toast({

@@ -111,26 +111,26 @@ const AdminDashboard = () => {
       <BreadcrumbNav items={breadcrumbItems} showBackButton={false} />
       
       <div>
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Admin Dashboard
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+          System Overview
         </h1>
-        <p className="text-gray-600 mt-1">
-          System overview and management tools
+        <p className="text-gray-300 mt-1">
+          Real-time system monitoring and administrative controls
         </p>
       </div>
 
       {/* System Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {systemStats.map((stat, index) => (
-          <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:scale-105 border-primary/20 animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+          <Card key={index} className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-800/70 hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in backdrop-blur-sm" style={{ animationDelay: `${index * 100}ms` }}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">{stat.value}</p>
+                  <p className="text-sm font-medium text-gray-400">{stat.title}</p>
+                  <p className="text-3xl font-bold text-gray-100 mt-1">{stat.value}</p>
                   <p className="text-sm text-gray-500 mt-1">{stat.change}</p>
                 </div>
-                <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                <stat.icon className={`h-8 w-8 text-cyan-400`} />
               </div>
             </CardContent>
           </Card>
@@ -138,18 +138,18 @@ const AdminDashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <Card className="border-primary/20 animate-fade-in">
+      <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm animate-fade-in">
         <CardHeader>
-          <CardTitle className="text-primary flex items-center gap-2">
+          <CardTitle className="text-cyan-400 flex items-center gap-2">
             <Settings className="h-5 w-5" />
             Quick Actions
           </CardTitle>
-          <CardDescription>Common administrative tasks</CardDescription>
+          <CardDescription className="text-gray-400">Common administrative tasks</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Button 
-              className="h-auto p-4 flex flex-col items-center gap-2 bg-primary hover:bg-primary/90 transition-all duration-200 hover:scale-105" 
+              className="h-auto p-4 flex flex-col items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white transition-all duration-200 hover:scale-105 shadow-lg" 
               onClick={() => handleQuickAction("User Management")}
               asChild
             >
@@ -159,7 +159,7 @@ const AdminDashboard = () => {
               </a>
             </Button>
             <Button 
-              className="h-auto p-4 flex flex-col items-center gap-2 bg-secondary hover:bg-secondary/90 transition-all duration-200 hover:scale-105" 
+              className="h-auto p-4 flex flex-col items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 hover:scale-105 shadow-lg" 
               onClick={() => handleQuickAction("Content Management")}
               asChild
             >
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
               </a>
             </Button>
             <Button 
-              className="h-auto p-4 flex flex-col items-center gap-2 bg-accent hover:bg-accent/90 transition-all duration-200 hover:scale-105" 
+              className="h-auto p-4 flex flex-col items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white transition-all duration-200 hover:scale-105 shadow-lg" 
               onClick={() => handleQuickAction("System Analytics")}
               asChild
             >
@@ -179,8 +179,7 @@ const AdminDashboard = () => {
               </a>
             </Button>
             <Button 
-              className="h-auto p-4 flex flex-col items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white transition-all duration-200 hover:scale-105" 
-              variant="outline"
+              className="h-auto p-4 flex flex-col items-center gap-2 bg-slate-600 hover:bg-slate-700 text-white transition-all duration-200 hover:scale-105 shadow-lg" 
               onClick={() => handleQuickAction("System Settings")}
             >
               <Settings className="h-6 w-6" />
@@ -192,25 +191,25 @@ const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* System Alerts */}
-        <Card className="border-primary/20 animate-fade-in">
+        <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm animate-fade-in">
           <CardHeader>
-            <CardTitle className="text-primary flex items-center gap-2">
+            <CardTitle className="text-cyan-400 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" />
               Recent System Alerts
             </CardTitle>
-            <CardDescription>Important notifications and system events</CardDescription>
+            <CardDescription className="text-gray-400">Important notifications and system events</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recentAlerts.map((alert, index) => (
                 <div 
                   key={index} 
-                  className="flex items-start gap-3 p-3 rounded-lg border transition-all duration-200 hover:bg-primary/5 hover:border-primary/20 animate-fade-in"
+                  className="flex items-start gap-3 p-3 rounded-lg border border-slate-700/50 bg-slate-900/30 transition-all duration-200 hover:bg-slate-700/30 hover:border-slate-600/50 animate-fade-in"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
                   {getAlertIcon(alert.type)}
                   <div className="flex-1">
-                    <p className="text-sm font-medium">{alert.message}</p>
+                    <p className="text-sm font-medium text-gray-200">{alert.message}</p>
                     <p className="text-xs text-gray-500 mt-1">{alert.time}</p>
                   </div>
                   <Badge className={`${getSeverityColor(alert.severity)} border`}>
@@ -223,42 +222,42 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Performance Metrics */}
-        <Card className="border-primary/20 animate-fade-in">
+        <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm animate-fade-in">
           <CardHeader>
-            <CardTitle className="text-primary flex items-center gap-2">
+            <CardTitle className="text-cyan-400 flex items-center gap-2">
               <TrendingUp className="h-5 w-5" />
               System Performance
             </CardTitle>
-            <CardDescription>Key performance indicators</CardDescription>
+            <CardDescription className="text-gray-400">Key performance indicators</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="animate-fade-in" style={{ animationDelay: '100ms' }}>
               <div className="flex justify-between text-sm mb-2">
-                <span>Word Error Rate (WER)</span>
-                <span className="text-green-600 font-medium">8.8%</span>
+                <span className="text-gray-300">Word Error Rate (WER)</span>
+                <span className="text-emerald-400 font-medium">8.8%</span>
               </div>
-              <Progress value={91.2} className="h-2" />
+              <Progress value={91.2} className="h-2 bg-slate-700" />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
               <div className="flex justify-between text-sm mb-2">
-                <span>Character Error Rate (CER)</span>
-                <span className="text-green-600 font-medium">5.1%</span>
+                <span className="text-gray-300">Character Error Rate (CER)</span>
+                <span className="text-emerald-400 font-medium">5.1%</span>
               </div>
-              <Progress value={94.9} className="h-2" />
+              <Progress value={94.9} className="h-2 bg-slate-700" />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: '300ms' }}>
               <div className="flex justify-between text-sm mb-2">
-                <span>Overall System Accuracy</span>
-                <span className="text-green-600 font-medium">91.2%</span>
+                <span className="text-gray-300">Overall System Accuracy</span>
+                <span className="text-emerald-400 font-medium">91.2%</span>
               </div>
-              <Progress value={91.2} className="h-2" />
+              <Progress value={91.2} className="h-2 bg-slate-700" />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: '400ms' }}>
               <div className="flex justify-between text-sm mb-2">
-                <span>Server Uptime</span>
-                <span className="text-green-600 font-medium">99.8%</span>
+                <span className="text-gray-300">Server Uptime</span>
+                <span className="text-emerald-400 font-medium">99.8%</span>
               </div>
-              <Progress value={99.8} className="h-2" />
+              <Progress value={99.8} className="h-2 bg-slate-700" />
             </div>
           </CardContent>
         </Card>

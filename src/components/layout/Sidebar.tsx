@@ -179,7 +179,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
           "fixed left-0 top-0 z-50",
           // Admin Theme - Dark professional
           isAdmin ? [
-            "bg-gray-800/95 backdrop-blur-md border-gray-700/50",
+            "bg-slate-900/95 backdrop-blur-md border-slate-700/50",
             "text-gray-100"
           ] : [
             // User Theme - Light friendly
@@ -192,7 +192,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
         {/* Header */}
         <div className={cn(
           "p-6 border-b pt-20",
-          isAdmin ? "border-gray-700/50" : "border-gray-200/50"
+          isAdmin ? "border-slate-700/50" : "border-gray-200/50"
         )}>
           <div className="flex items-center justify-between">
             <div>
@@ -216,7 +216,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
               className={cn(
                 "h-8 w-8 p-0 transition-opacity",
                 isAdmin 
-                  ? "hover:bg-gray-700 opacity-60 hover:opacity-100 text-gray-400 hover:text-gray-200" 
+                  ? "hover:bg-slate-700 opacity-60 hover:opacity-100 text-gray-400 hover:text-gray-200" 
                   : "hover:bg-gray-100 opacity-60 hover:opacity-100"
               )}
             >
@@ -262,8 +262,8 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
                       // Admin active/hover styles
                       isAdmin ? [
                         active 
-                          ? "bg-blue-600 text-white shadow-sm" 
-                          : "text-gray-300 hover:text-white hover:bg-gray-700/70",
+                          ? "bg-cyan-600 text-white shadow-sm" 
+                          : "text-gray-300 hover:text-white hover:bg-slate-700/70",
                         "hover:scale-[1.01] active:scale-[0.99]"
                       ] : [
                         // User active/hover styles  
@@ -306,7 +306,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
         <motion.div 
           className={cn(
             "p-4 border-t",
-            isAdmin ? "border-gray-700/50" : "border-gray-200/50"
+            isAdmin ? "border-slate-700/50" : "border-gray-200/50"
           )}
           initial={{ opacity: 0 }}
           animate={{ opacity: isOpen ? 1 : 0 }}
@@ -321,7 +321,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
           )}>
             LipRead AI v1.0
             {isAdmin && (
-              <div className="mt-1 text-blue-400 font-medium">
+              <div className="mt-1 text-cyan-400 font-medium">
                 Admin Console
               </div>
             )}
