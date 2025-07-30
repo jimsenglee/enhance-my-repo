@@ -245,7 +245,7 @@ const TutorialLibrary = () => {
               onClick={() => watchTutorial(tutorial.id)}
             >
               <Play className="mr-2 h-4 w-4" />
-              Watch Tutorial
+              Watch Now
             </Button>
           </div>
         </div>
