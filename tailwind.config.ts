@@ -72,6 +72,29 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				admin: {
+					background: 'hsl(var(--admin-background))',
+					foreground: 'hsl(var(--admin-foreground))',
+					card: 'hsl(var(--admin-card))',
+					'card-foreground': 'hsl(var(--admin-card-foreground))',
+					primary: 'hsl(var(--admin-primary))',
+					'primary-foreground': 'hsl(var(--admin-primary-foreground))',
+					secondary: 'hsl(var(--admin-secondary))',
+					'secondary-foreground': 'hsl(var(--admin-secondary-foreground))',
+					accent: 'hsl(var(--admin-accent))',
+					'accent-foreground': 'hsl(var(--admin-accent-foreground))',
+					muted: 'hsl(var(--admin-muted))',
+					'muted-foreground': 'hsl(var(--admin-muted-foreground))',
+					border: 'hsl(var(--admin-border))',
+					input: 'hsl(var(--admin-input))',
+					sidebar: 'hsl(var(--admin-sidebar))',
+					'sidebar-foreground': 'hsl(var(--admin-sidebar-foreground))',
+					'sidebar-accent': 'hsl(var(--admin-sidebar-accent))',
+					success: 'hsl(var(--admin-success))',
+					warning: 'hsl(var(--admin-warning))',
+					error: 'hsl(var(--admin-error))',
+					info: 'hsl(var(--admin-info))'
 				}
 			},
 			borderRadius: {

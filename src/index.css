@@ -47,6 +47,29 @@
     --sidebar-accent-foreground: 262 76% 29%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 262 52% 47%;
+
+    /* Admin-specific design tokens */
+    --admin-background: 210 20% 98%;
+    --admin-foreground: 215 25% 27%;
+    --admin-card: 0 0% 100%;
+    --admin-card-foreground: 215 25% 27%;
+    --admin-primary: 215 40% 47%;
+    --admin-primary-foreground: 0 0% 100%;
+    --admin-secondary: 210 30% 92%;
+    --admin-secondary-foreground: 215 25% 27%;
+    --admin-accent: 215 60% 95%;
+    --admin-accent-foreground: 215 40% 47%;
+    --admin-muted: 210 30% 92%;
+    --admin-muted-foreground: 215 15% 55%;
+    --admin-border: 215 20% 88%;
+    --admin-input: 0 0% 100%;
+    --admin-sidebar: 215 40% 47%;
+    --admin-sidebar-foreground: 0 0% 100%;
+    --admin-sidebar-accent: 215 35% 42%;
+    --admin-success: 142 70% 45%;
+    --admin-warning: 38 92% 50%;
+    --admin-error: 348 83% 60%;
+    --admin-info: 199 89% 48%;
   }
 
   /* Hide scrollbars for custom components */
@@ -96,6 +119,29 @@
     --sidebar-accent-foreground: 252 32% 75%;
     --sidebar-border: 262 60% 20%;
     --sidebar-ring: 252 32% 75%;
+
+    /* Admin dark mode */
+    --admin-background: 215 30% 8%;
+    --admin-foreground: 210 40% 98%;
+    --admin-card: 215 25% 12%;
+    --admin-card-foreground: 210 40% 98%;
+    --admin-primary: 215 60% 65%;
+    --admin-primary-foreground: 215 30% 8%;
+    --admin-secondary: 215 20% 15%;
+    --admin-secondary-foreground: 210 40% 98%;
+    --admin-accent: 215 25% 18%;
+    --admin-accent-foreground: 215 60% 65%;
+    --admin-muted: 215 20% 15%;
+    --admin-muted-foreground: 215 15% 65%;
+    --admin-border: 215 15% 20%;
+    --admin-input: 215 25% 12%;
+    --admin-sidebar: 215 35% 15%;
+    --admin-sidebar-foreground: 210 40% 98%;
+    --admin-sidebar-accent: 215 30% 20%;
+    --admin-success: 142 70% 45%;
+    --admin-warning: 38 92% 50%;
+    --admin-error: 348 83% 60%;
+    --admin-info: 199 89% 48%;
   }
 }
 

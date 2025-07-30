@@ -30,7 +30,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className={`min-h-screen flex flex-col ${
       isAdmin 
-        ? 'bg-gray-900' // Dark admin background
+        ? 'bg-admin-background' // Clean admin background
         : 'bg-gradient-to-br from-gray-50 to-gray-100' // Light user background
     }`}>
       <Navbar onToggleSidebar={toggleSidebar} />
@@ -51,7 +51,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           }}
         >
           <div className={`p-6 max-w-7xl mx-auto ${
-            isAdmin ? 'text-gray-100' : 'text-gray-900'
+            isAdmin ? 'text-admin-foreground' : 'text-gray-900'
           }`}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
