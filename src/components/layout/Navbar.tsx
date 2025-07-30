@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { motion } from 'framer-motion';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User, Settings, LogOut, Video } from 'lucide-react';
+import { User, Settings, LogOut, Video, Menu } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }: { onToggleSidebar?: () => void }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -26,7 +27,30 @@ const Navbar = () => {
     <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-primary/10 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            {/* Hamburger Menu Button - Only show when user is logged in */}
+            {user && onToggleSidebar && (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onToggleSidebar}
+                  className="h-9 w-9 p-0 hover:bg-primary/10 transition-all duration-200 rounded-lg"
+                >
+                  <motion.div
+                    initial={false}
+                    animate={{ rotate: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="h-5 w-5 text-gray-600 hover:text-primary transition-colors" />
+                  </motion.div>
+                </Button>
+              </motion.div>
+            )}
+            
             <Link to="/" className="flex items-center space-x-2 group">
               <Video className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
